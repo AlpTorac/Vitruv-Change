@@ -14,8 +14,8 @@ public class OrthogonalInformationQuery implements Cloneable {
     /**
      * Reserved for query-specific details and tool-specific details
      */
-    private final Map<Object, Object> queryParameters = new LinkedHashMap<Object, Object>();
-    private final Map<Object, Object> queryDetails = new LinkedHashMap<Object, Object>();
+    private final Map<OrthogonalInformationQueryEnum, Object> queryParameters = new LinkedHashMap<OrthogonalInformationQueryEnum, Object>();
+    private final Map<OrthogonalInformationQueryEnum, Object> queryDetails = new LinkedHashMap<OrthogonalInformationQueryEnum, Object>();
 
     private Object result;
     private final List<OrthogonalInformationSourceInterface> visitedOISIs;
@@ -39,7 +39,9 @@ public class OrthogonalInformationQuery implements Cloneable {
     private final Set<String> excludedExecutorIDs;
 
     /**
-     * The OISI that should process this query first.
+     * The OISI that should process this query first. If null, all OISIs will be
+     * able to process this query first, i.e. the query can be forwarded to any
+     * OISI.
      */
     private String rootOISIID;
 
@@ -68,11 +70,11 @@ public class OrthogonalInformationQuery implements Cloneable {
         this.usedExecutors = new ArrayList<>();
     }
 
-    public Map<Object, Object> getQueryParametersMap() {
+    public Map<OrthogonalInformationQueryEnum, Object> getQueryParametersMap() {
         return this.queryParameters;
     }
 
-    public Map<Object, Object> getQueryDetailsMap() {
+    public Map<OrthogonalInformationQueryEnum, Object> getQueryDetailsMap() {
         return this.queryDetails;
     }
 
@@ -158,7 +160,7 @@ public class OrthogonalInformationQuery implements Cloneable {
         // Compare root OISI IDs
         (this.rootOISIID == query.rootOISIID ||
                 this.rootOISIID.equals(query.rootOISIID)) &&
-                // Compare included executor IDs
+        // Compare included executor IDs
                 this.includedExecutorIDs.containsAll(query.includedExecutorIDs) &&
                 query.includedExecutorIDs.containsAll(this.includedExecutorIDs) &&
                 // Compare excluded executor IDs

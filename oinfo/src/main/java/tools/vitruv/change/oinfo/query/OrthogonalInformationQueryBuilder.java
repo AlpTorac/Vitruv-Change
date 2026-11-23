@@ -14,12 +14,12 @@ public class OrthogonalInformationQueryBuilder {
         return this;
     }
 
-    public OrthogonalInformationQueryBuilder withParam(Object paramObject, Object value) {
+    public OrthogonalInformationQueryBuilder withParam(OrthogonalInformationQueryEnum paramObject, Object value) {
         this.query.getQueryParametersMap().put(paramObject, value);
         return this;
     }
 
-    public OrthogonalInformationQueryBuilder withParams(Map<Object, Object> paramToVal) {
+    public OrthogonalInformationQueryBuilder withParams(Map<OrthogonalInformationQueryEnum, Object> paramToVal) {
         this.query.getQueryParametersMap().putAll(paramToVal);
         return this;
     }
