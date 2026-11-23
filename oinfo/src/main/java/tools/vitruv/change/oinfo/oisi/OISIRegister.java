@@ -1,21 +1,24 @@
 package tools.vitruv.change.oinfo.oisi;
 
 import tools.vitruv.change.oinfo.query.OrthogonalInformationQuery;
-import tools.vitruv.change.oinfo.source.OrthogonalInformationSource;
-import tools.vitruv.change.oinfo.query.OrthogonalInformationQuerySwitch;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class OISIRegister {
-    private final List<OrthogonalInformationSourceInterface> rootOISIs = new ArrayList<>();
+    private final Set<OrthogonalInformationSourceInterface> rootOISIs = new LinkedHashSet<>();
 
-    public void addOISI(OrthogonalInformationSourceInterface oisi) {
-        rootOISIs.add(oisi);
+    public boolean addOISI(OrthogonalInformationSourceInterface oisi) {
+        return rootOISIs.add(oisi);
     }
 
-    public void removeOISI(OrthogonalInformationSourceInterface oisi) {
-        rootOISIs.remove(oisi);
+    public boolean removeOISI(OrthogonalInformationSourceInterface oisi) {
+        return rootOISIs.remove(oisi);
+    }
+
+    public List<OrthogonalInformationSourceInterface> getAllOISIs() {
+        return List.copyOf(rootOISIs);
     }
 
     public OrthogonalInformationQuery forwardQueryToOISIs(OrthogonalInformationQuery query) {
@@ -25,5 +28,9 @@ public class OISIRegister {
 
     public void clearOISIs() {
         rootOISIs.clear();
+    }
+
+    public boolean canHandleQuery(OrthogonalInformationQuery query) {
+        return rootOISIs.stream().anyMatch(oisi -> oisi.getID().equals(query.getRootOISIID()));
     }
 }

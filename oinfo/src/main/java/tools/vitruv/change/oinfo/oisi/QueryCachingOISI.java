@@ -1,8 +1,6 @@
 package tools.vitruv.change.oinfo.oisi;
 
 import tools.vitruv.change.oinfo.query.OrthogonalInformationQuery;
-import tools.vitruv.change.oinfo.source.OrthogonalInformationSource;
-import tools.vitruv.change.oinfo.query.OrthogonalInformationQuerySwitch;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -18,7 +16,6 @@ public class QueryCachingOISI implements SingleDelegatingOISI {
         if (duplicateQuery != null) {
             return duplicateQuery.clone();
         }
-        // TODO: Check whether any eligible executors are present in oisi's switch
         var resultingQuery = delegateOISI.getOrthInfo(query);
         if (resultingQuery.getResult() != null) {
             queryCache.add(resultingQuery);
@@ -49,5 +46,10 @@ public class QueryCachingOISI implements SingleDelegatingOISI {
     @Override
     public OrthogonalInformationSourceInterface getDelegateOISI() {
         return this.delegateOISI;
+    }
+
+    @Override
+    public boolean canHandleQuery(OrthogonalInformationQuery query) {
+        return this.delegateOISI.canHandleQuery(query);
     }
 }

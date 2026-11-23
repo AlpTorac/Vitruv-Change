@@ -13,8 +13,6 @@ package tools.vitruv.change.oinfo.query;
  */
 public interface OrthogonalInformationQueryExecutor {
     public Object executeQuery(OrthogonalInformationQuery query);
-
     public String getID();
-
     public void setID(String id);
 }

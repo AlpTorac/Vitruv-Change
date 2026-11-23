@@ -92,6 +92,10 @@ public class OrthogonalInformationQuery implements Cloneable {
         this.usedExecutors.add(executor);
     }
 
+    public List<OrthogonalInformationQueryExecutor> getUsedExecutors() {
+        return List.copyOf(usedExecutors);
+    }
+
     public void addConsideredOIS(OrthogonalInformationSource ois) {
         this.consideredOISs.add(ois);
     }
@@ -116,6 +120,10 @@ public class OrthogonalInformationQuery implements Cloneable {
     public void excludeQueryExecutor(String queryExecutorID) {
         this.includedExecutorIDs.remove(queryExecutorID);
         this.excludedExecutorIDs.add(queryExecutorID);
+    }
+
+    public List<OrthogonalInformationQuery> getQueryVersions() {
+        return List.copyOf(queryVersions);
     }
 
     public List<OrthogonalInformationSourceInterface> getVisitedOISIs() {

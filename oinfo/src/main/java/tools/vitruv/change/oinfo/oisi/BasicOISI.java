@@ -94,4 +94,9 @@ public class BasicOISI implements AccessorOISI {
                 .append(" OISs: ").append(this.getOrthInfoSources())
                 .toString();
     }
+
+    @Override
+    public boolean canHandleQuery(OrthogonalInformationQuery query) {
+        return this.querySwitch.canHandleQuery(query);
+    }
 }

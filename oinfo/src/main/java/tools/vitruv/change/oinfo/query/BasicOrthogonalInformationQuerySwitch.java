@@ -1,21 +1,26 @@
 package tools.vitruv.change.oinfo.query;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A simple OrthogonalInformationQuerySwitch implementation that forwards a
  * query to the first query executor that is eligible.
  */
 public class BasicOrthogonalInformationQuerySwitch implements OrthogonalInformationQuerySwitch {
-    private final List<OrthogonalInformationQueryExecutor> executors = new ArrayList<>();
+    private final Set<OrthogonalInformationQueryExecutor> executors = new LinkedHashSet<>();
 
-    public void addQueryExecutor(OrthogonalInformationQueryExecutor executor) {
-        executors.add(executor);
+    public boolean addQueryExecutor(OrthogonalInformationQueryExecutor executor) {
+        return executors.add(executor);
     }
 
-    public void removeQueryExecutor(OrthogonalInformationQueryExecutor executor) {
-        executors.remove(executor);
+    public boolean removeQueryExecutor(OrthogonalInformationQueryExecutor executor) {
+        return executors.remove(executor);
+    }
+
+    public List<OrthogonalInformationQueryExecutor> getAllQueryExecutors() {
+        return List.copyOf(executors);
     }
 
     @Override
@@ -27,5 +32,10 @@ public class BasicOrthogonalInformationQuerySwitch implements OrthogonalInformat
         // Add the used query executor
         query.addUsedExecutor(executor);
         return result;
+    }
+
+    @Override
+    public boolean canHandleQuery(OrthogonalInformationQuery query) {
+        return executors.stream().anyMatch(e -> query.isExecutorEligible(e.getID()));
     }
 }

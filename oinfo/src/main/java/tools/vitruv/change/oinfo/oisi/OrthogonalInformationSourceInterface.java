@@ -29,6 +29,7 @@ import tools.vitruv.change.oinfo.query.OrthogonalInformationQuery;
  * OrthogonalInformationSources.
  */
 public interface OrthogonalInformationSourceInterface {
+    public boolean canHandleQuery(OrthogonalInformationQuery query);
     public OrthogonalInformationQuery getOrthInfo(OrthogonalInformationQuery query);
     public String getID();
     public void setID(String oisiID);

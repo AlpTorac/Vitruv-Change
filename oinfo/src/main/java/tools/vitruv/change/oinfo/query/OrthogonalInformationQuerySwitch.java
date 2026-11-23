@@ -18,5 +18,6 @@ package tools.vitruv.change.oinfo.query;
  * perform the query and in which order they process it.
  */
 public interface OrthogonalInformationQuerySwitch {
+    public boolean canHandleQuery(OrthogonalInformationQuery query);
     public Object forwardQuery(OrthogonalInformationQuery query);
 }
