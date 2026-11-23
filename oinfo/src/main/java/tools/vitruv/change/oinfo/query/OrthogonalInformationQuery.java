@@ -112,6 +112,10 @@ public class OrthogonalInformationQuery implements Cloneable {
         this.rootOISIID = rootOISIID;
     }
 
+    public boolean isRootOISIEligible(String rootOISIID) {
+        return this.rootOISIID != null ? this.rootOISIID.equals(rootOISIID) : true;
+    }
+
     public void includeQueryExecutor(String queryExecutorID) {
         this.includedExecutorIDs.add(queryExecutorID);
         this.excludedExecutorIDs.remove(queryExecutorID);
@@ -146,10 +150,15 @@ public class OrthogonalInformationQuery implements Cloneable {
         if (query == this)
             return true;
 
+        // Make sure that either both rootOISIID are null or neither
+        if (this.rootOISIID == null ^ query.rootOISIID == null)
+            return false;
+
         return
         // Compare root OISI IDs
-        this.rootOISIID.equals(query.rootOISIID) &&
-        // Compare included executor IDs
+        (this.rootOISIID == query.rootOISIID ||
+                this.rootOISIID.equals(query.rootOISIID)) &&
+                // Compare included executor IDs
                 this.includedExecutorIDs.containsAll(query.includedExecutorIDs) &&
                 query.includedExecutorIDs.containsAll(this.includedExecutorIDs) &&
                 // Compare excluded executor IDs

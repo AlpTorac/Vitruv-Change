@@ -22,7 +22,7 @@ public class OISIRegister {
     }
 
     public OrthogonalInformationQuery forwardQueryToOISIs(OrthogonalInformationQuery query) {
-        return rootOISIs.stream().filter(oisi -> oisi.getID().equals(query.getRootOISIID())).findFirst().get()
+        return rootOISIs.stream().filter(oisi -> oisi.canHandleQuery(query)).findFirst().get()
                 .getOrthInfo(query);
     }
 
@@ -31,6 +31,6 @@ public class OISIRegister {
     }
 
     public boolean canHandleQuery(OrthogonalInformationQuery query) {
-        return rootOISIs.stream().anyMatch(oisi -> oisi.getID().equals(query.getRootOISIID()));
+        return rootOISIs.stream().anyMatch(oisi -> oisi.canHandleQuery(query));
     }
 }

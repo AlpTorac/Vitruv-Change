@@ -12,6 +12,9 @@ package tools.vitruv.change.oinfo.query;
  * for model Resources, see OrthogonalInformationSources for that)
  */
 public interface OrthogonalInformationQueryExecutor {
+    public default boolean canHandleQuery(OrthogonalInformationQuery query) {
+        return query.isExecutorEligible(getID());
+    }
     public Object executeQuery(OrthogonalInformationQuery query);
     public String getID();
     public void setID(String id);

@@ -25,7 +25,7 @@ public class BasicOrthogonalInformationQuerySwitch implements OrthogonalInformat
 
     @Override
     public Object forwardQuery(OrthogonalInformationQuery query) {
-        var executor = executors.stream().filter(e -> query.isExecutorEligible(e.getID())).findFirst().get();
+        var executor = executors.stream().filter(e -> e.canHandleQuery(query)).findFirst().get();
 
         var result = executor.executeQuery(query);
 
@@ -36,6 +36,6 @@ public class BasicOrthogonalInformationQuerySwitch implements OrthogonalInformat
 
     @Override
     public boolean canHandleQuery(OrthogonalInformationQuery query) {
-        return executors.stream().anyMatch(e -> query.isExecutorEligible(e.getID()));
+        return executors.stream().anyMatch(e -> e.canHandleQuery(query));
     }
 }

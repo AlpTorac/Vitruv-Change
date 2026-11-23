@@ -16,11 +16,12 @@ public class QueryCachingOISI implements SingleDelegatingOISI {
         if (duplicateQuery != null) {
             return duplicateQuery.clone();
         }
-        var resultingQuery = delegateOISI.getOrthInfo(query);
-        if (resultingQuery.getResult() != null) {
+        if (delegateOISI.canHandleQuery(query)) {
+            var resultingQuery = delegateOISI.getOrthInfo(query);
             queryCache.add(resultingQuery);
+            return resultingQuery;
         }
-        return resultingQuery;
+        return null;
     }
 
     @Override
